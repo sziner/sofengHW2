@@ -1,4 +1,4 @@
-package mobile_phone;
+package mobilePhone;
 import java.util.*;
 public class MobilePhone {
 	public MobilePhone() {

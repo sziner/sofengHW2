@@ -1,4 +1,4 @@
-package mobile_phone;
+package mobilePhone;
 
 import java.util.*;
 import java.io.FileWriter; // Import the FileWriter class

@@ -1,4 +1,4 @@
-package mobile_phone;
+package mobilePhone;
 
 public class MediaPlayer implements App {
 
