@@ -11,7 +11,7 @@ public class SmsApp implements Applicable {
 		this.contactList = contactList;
 	}
 
-	public void addMessageToContact(String name) {
+	public void addMessageToContact(Contact c, String name) {
 
 	}
 
