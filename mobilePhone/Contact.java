@@ -3,7 +3,7 @@ package mobilePhone;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-public class Contact  {
+public class Contact implements Comparable<Contact>  {
 
 	private String name;
  	private int phonenumber;	
@@ -94,5 +94,9 @@ public class Contact  {
 
 	public int compareTo(Contact o) {
 		return this.getName().compareTo(o.getName());
+	}
+
+	public int compareTo(String str) {
+		return this.getName().compareTo(str);
 	}
 }
