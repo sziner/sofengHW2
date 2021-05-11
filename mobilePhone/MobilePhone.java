@@ -5,7 +5,7 @@ public class MobilePhone {
 		list = new ArrayList<Contact>();
 		sms = new SmsApp(list);
 		cal = new CalendarApp(list);
-		pb = new PhoneBookApp(list, sms, cal);
+		pb = new PhoneBookApp(list, cal);
 		mp = new MediaPlayerApp();
 	}
 	private ArrayList<Contact> list;
@@ -13,7 +13,7 @@ public class MobilePhone {
 	private SmsApp sms;
 	private CalendarApp cal;
 	private MediaPlayerApp mp;
-	public void run() {
+	public void run() throws Exception {
 		Scanner s = new Scanner(System.in);
 		int op;
 		System.out.println("Welcome to MobilePhone!");

@@ -37,6 +37,10 @@ public class Contact  {
 		return this.name.equals(other.name);
 	}
 
+	public boolean equals(String name) {
+		return this.name.equals(name);
+	}
+
 	/* Chat methods */ 
 
 	public ArrayList<String> getChat() {
@@ -74,7 +78,6 @@ public class Contact  {
 		}
 	}
 
-	@Override
 	public boolean contains(String str) {
 		ListIterator<String> it = chat.listIterator();
 		while (it.hasNext()) {
@@ -87,5 +90,9 @@ public class Contact  {
 
 	public ArrayList<MeetingCalendarEvent> getMeetings() {
 		return meetings;
+	}
+
+	public int compareTo(Contact o) {
+		return this.getName().compareTo(o.getName());
 	}
 }

@@ -8,69 +8,26 @@ import java.io.FileNotFoundException; // Import this class to handle errors
 
 public class PhoneBookApp implements Applicable {
 	private ArrayList<Contact> list;
-	private SmsApp sms;
 	private CalendarApp cal;
 
-	public PhoneBookApp(ArrayList<Contact> list, SmsApp sms, CalendarApp cal) {
+	public PhoneBookApp(ArrayList<Contact> list, CalendarApp cal) {
 		this.list = list;
-		this.sms = sms;
 		this.cal = cal;
 	}
-
-	private static class SortByName implements Comparator<Contact> {
-		// Used for sorting phone book by name
-		public int compare(Contact a, Contact b) {
-			return a.getName().compareTo(b.getName());
-		}
-	}
-
-	private static class SortByNameAndNumber implements Comparator<Contact> {
-		// Used for sorting phone book by name and number
-		public int compare(Contact a, Contact b) {
-			int comp = a.getName().compareTo(b.getName());
-			if (comp == 0) {
-				return b.getPhonenumber() - a.getPhonenumber();
-			} else {
-				return comp;
-			}
-		}
-	}
-
-	private static class SortByNumber implements Comparator<Contact> {
-		// Used for sorting phone book by number
-		public int compare(Contact a, Contact b) {
-			return b.getPhonenumber() - a.getPhonenumber();
-		}
-	}
-
-	private int indexOfByName(String name) {
-		ListIterator<Contact> it = list.listIterator();
-		while (it.hasNext()) {
-			if (it.next().getName().equals(name)) {
-				return it.previousIndex();
-			}
-		}
-		return -1;
-	}
-
-	public boolean contains(String name) {
-		return (indexOfByName(name) >= 0);
-	}
-
+	
 	public void add(String name, int phonenumber) throws Exception {
-		if(indexOfByName(name) > -1)
+		if(list.contains(name))
 			throw new Exception("Cannot add duplicate contact name");
 		Contact c = new Contact(name, phonenumber);
 		list.add(c);
 	}
 
-	public void removeContact(String name) {
-		int i = indexOfByName(name);
-		/*if (i < 0) {
+	public void removeContact(String name) throws Exception {
+		int i = list.indexOf(name);
+		if (i < 0) {
 			throw new Exception("Contact does not exist");
-		}*/
-		for (MeetingCalendarEvent meeting : list.get(i).getMeetings()) {
-			cal.removeCalendarEvent(meeting);
+		} else {
+			cal.removeContactMeetings(list.get(i));
 		}
 		list.remove(i);
 	}
@@ -86,7 +43,7 @@ public class PhoneBookApp implements Applicable {
 	}
 
 	public void search(String name) {
-		int i = indexOfByName(name);
+		int i = list.indexOf(name);
 		if (i > -1) {
 			System.out.println("Contact found: " + list.get(i));
 		} else {
@@ -95,28 +52,11 @@ public class PhoneBookApp implements Applicable {
 	}
 
 	public void sortByName() {
-		list.sort(new SortByName());
+		list.sort(null);
 	}
 
 	public void sortByNumber() {
-		list.sort(new SortByNumber());
-	}
-
-	public void removeDuplicates() {
-		if (list.size() < 2) {
-			return;
-		}
-		list.sort(new SortByNameAndNumber());
-		ListIterator<? extends Contact> it = list.listIterator(0);
-		Contact first = it.next();
-		while (it.hasNext()) {
-			Contact cur = it.next();
-			if (first.equals(cur)) {
-				it.remove();
-			} else {
-				first = cur;
-			}
-		}
+		list.sort((a, b) ->   b.getPhonenumber() - a.getPhonenumber());
 	}
 
 	public void reverse() {
@@ -147,7 +87,7 @@ public class PhoneBookApp implements Applicable {
 			while (fileScan.hasNext()) {
 				String name = fileScan.next();
 				int phonenumber = fileScan.nextInt();
-				if(indexOfByName(name) != -1)
+				if(list.indexOf(name) != -1)
 				{
 					System.out.println("The name: " + name + " already exists.");
 					continue;
@@ -162,7 +102,7 @@ public class PhoneBookApp implements Applicable {
 	}
 
 	@Override
-	public void run(Scanner s) {
+	public void run(Scanner s) throws Exception {
 		int op;
 		while(true)
 		{
@@ -173,11 +113,10 @@ public class PhoneBookApp implements Applicable {
 					+ "4.  Find contact (by name)\n"
 					+ "5.  Sort phonebook by names\n"
 					+ "6.  Sort phonebook by phone numbers\n"
-					+ "7.  Remove duplicates\n"
-					+ "8.  Reverse phonebook's order\n"
-					+ "9.  Save phonebook to text file\n"
-					+ "10. Load contacts from text file\n"
-					+ "11. Exit\n");
+					+ "7.  Reverse phonebook's order\n"
+					+ "8.  Save phonebook to text file\n"
+					+ "9. Load contacts from text file\n"
+					+ "10. Exit\n");
 			if(!s.hasNextInt())
 			{
 				System.out.println("Invalid input\n");
@@ -226,16 +165,11 @@ public class PhoneBookApp implements Applicable {
 				continue;
 			}
 			else if (op==7) {
-				removeDuplicates();
-				System.out.println("Duplicates removed");
-				continue;
-			}
-			else if (op==8) {
 				reverse();
 				System.out.println("Phonebook reversed");
 				continue;
 			}
-			else if (op==9) {
+			else if (op==8) {
 				System.out.println("Enter a name for the text file:");
 	 			String filename;
 	 			filename = s.next();
@@ -243,7 +177,7 @@ public class PhoneBookApp implements Applicable {
 				System.out.println("Phonebook saved succesfully");
 				continue;
 			}
-			else if (op==10) {
+			else if (op==9) {
 				System.out.println("Enter a Text file path:");
 				String path;
 				path = s.next();
@@ -251,7 +185,7 @@ public class PhoneBookApp implements Applicable {
 				System.out.println("Entries loaded succesfully");
 				continue;
 			}
-			else if (op==11) {
+			else if (op==10) {
 				System.out.println("Exiting...");
 				return;
 			}

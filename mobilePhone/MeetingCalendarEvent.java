@@ -27,4 +27,19 @@ public class MeetingCalendarEvent extends AbstractCalendarEvent{
 	public boolean equals(MeetingCalendarEvent o) {
 		return (super.equals(o) && (this.contact.equals(o.contact)));
 	}
+
+	@Override
+	public int compareTo(AbstractCalendarEvent o) {
+		int res = super.compareTo(o);
+		if (res != 0) {
+			return res;
+		} else {
+			if (o instanceof SimpleCalendarEvent) {
+				return -1;
+			} else {
+				MeetingCalendarEvent oMeeting = (MeetingCalendarEvent) o;
+				return this.contact.compareTo(oMeeting.contact);
+			}
+		}
+	}
 }

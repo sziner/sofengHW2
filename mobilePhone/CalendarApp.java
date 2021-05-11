@@ -88,12 +88,30 @@ public class CalendarApp implements Applicable {
 	}
 
 
-	public void removeContactMeetings(Contact c) {
-
+	public void removeContactMeetings(Contact contact) {
+		for(MeetingCalendarEvent meeting : contact.getMeetings()) {
+			removeCalendarEvent(meeting);
+		}
 	}
 
-	public void removeCalendarEvent(AbstractCalendarEvent event) {
-		
+	public void removeCalendarEvent(AbstractCalendarEvent event) {//TODO unfinished
+		Date date = event.getEventDate();
+		int i = Collections.binarySearch(months, date);
+		if (i < 0) {
+			;
+		}
+		Month month = months.get(i);
+		int j = Collections.binarySearch(month.days, date);
+		if (j < 0) {
+			;
+		}
+		Day day = month.days.get(j);
+		int k = Collections.binarySearch(day.eventsList, event);
+		if (k < 0) {
+			;
+		}
+		day.eventsList.add(k, event);
+				
 	}
 
 	public void printDay(Date date) {
