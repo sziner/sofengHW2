@@ -3,7 +3,7 @@ package mobilePhone;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public abstract class AbstractCalendarEvent implements Comparable<AbstractCalendarEvent> {
+public abstract class AbstractCalendarEvent implements Comparable<Object> {
 
 	
 	public AbstractCalendarEvent(Date date, int duration){
@@ -15,7 +15,7 @@ public abstract class AbstractCalendarEvent implements Comparable<AbstractCalend
 	protected int duration;
 	protected SimpleDateFormat df; 
 
-	public Date getEventDate() {
+	public Date getDate() {
 		return date;
 	}
 	
@@ -25,7 +25,7 @@ public abstract class AbstractCalendarEvent implements Comparable<AbstractCalend
 	
 	@Override
 	public String toString() {
-		return df.format(date) + " duration: " + duration;
+		return df.format(date) + " (" + duration + "m) ";
 	}
 	
 	public boolean equals(AbstractCalendarEvent o) {
@@ -33,8 +33,13 @@ public abstract class AbstractCalendarEvent implements Comparable<AbstractCalend
 	}
 	
 	@Override
-	public int compareTo(AbstractCalendarEvent o) {
-		int dateDif = this.date.compareTo(o.date);
-		return ((dateDif != 0) ? dateDif : -(this.duration - o.duration));
-	}
+	public int compareTo(Object o) {
+		if (o instanceof AbstractCalendarEvent) {
+			AbstractCalendarEvent e = (AbstractCalendarEvent) o;
+			int dateDif = this.date.compareTo(e.getDate());
+			return ((dateDif != 0) ? dateDif : (this.duration - e.duration));
+		} else {
+			return this.date.compareTo((Date) o);
+		}
+	} 
 }

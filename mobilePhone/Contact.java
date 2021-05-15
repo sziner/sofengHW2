@@ -1,18 +1,20 @@
 package mobilePhone;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 public class Contact implements Comparable<Contact>  {
 
 	private String name;
- 	private int phonenumber;	
+ 	private int phonenumber = 0;	
  	private ArrayList<String> chat;
- 	private ArrayList<MeetingCalendarEvent> meetings;
 
 	/* regular class methods */
  
- 	public Contact(String name, int phonenumber) {
+	public Contact(String name) {
+		this.name = name;
+	}
+	
+	public Contact(String name, int phonenumber) {
 		this.name = name;
 		this.phonenumber = phonenumber;
 	}
@@ -45,7 +47,7 @@ public class Contact implements Comparable<Contact>  {
 
 	public ArrayList<String> getChat() {
 		return chat;
-	}		
+	}
 	
 	public void addToChat(String str) {
 		chat.add(str);	
@@ -55,48 +57,27 @@ public class Contact implements Comparable<Contact>  {
 		chat.clear();	
 	}
 
-
-	/*  Calendar methods */ 
-
-	public void addMeeting(MeetingCalendarEvent entry) {
-		int i = java.util.Collections.binarySearch(meetings, entry);//insert at: -(i+1)
-		if (i >= 0) {
-			meetings.add(i, entry);
+	public void printChat() {
+		if(chat.isEmpty()) {
+			System.out.println("No messages");
 		} else {
-			meetings.add(-(i+1), entry);
-		}
-	}
-
-	public void removeMeeting(MeetingCalendarEvent entry) {
-		meetings.remove(entry);
-	}
-
-	public void printAgenda() {
-		ListIterator<MeetingCalendarEvent> it = meetings.listIterator();
-		while (it.hasNext()) {
-			System.out.println(it.next());
+			for (String msg : chat) {
+				System.out.println(msg);
+			}
 		}
 	}
 
 	public boolean contains(String str) {
-		ListIterator<String> it = chat.listIterator();
-		while (it.hasNext()) {
-			if (it.next().contains(str)) {
+		for ( String s : chat) {
+			if (s.contains(str)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public ArrayList<MeetingCalendarEvent> getMeetings() {
-		return meetings;
-	}
-
+	@Override
 	public int compareTo(Contact o) {
 		return this.getName().compareTo(o.getName());
-	}
-
-	public int compareTo(String str) {
-		return this.getName().compareTo(str);
 	}
 }

@@ -4,10 +4,14 @@ import java.util.Date;
 
 public class SimpleCalendarEvent extends AbstractCalendarEvent {
 	String description;
-
+	
 	public SimpleCalendarEvent(Date date, int duration, String description) {
 		super(date, duration);
 		this.description = description;
+	}
+	
+	public String getDescription() {
+		return description;
 	}
 
 	@Override
@@ -28,9 +32,9 @@ public class SimpleCalendarEvent extends AbstractCalendarEvent {
 	}
 
 	@Override
-	public int compareTo(AbstractCalendarEvent o) {
+	public int compareTo(Object o) {
 		int res = super.compareTo(o);
-		if (res != 0) {
+		if (res != 0 || o instanceof Date) {
 			return res;
 		} else if (o instanceof MeetingCalendarEvent) {
 			return 1;
@@ -38,5 +42,10 @@ public class SimpleCalendarEvent extends AbstractCalendarEvent {
 			SimpleCalendarEvent oSimple = (SimpleCalendarEvent) o;
 			return this.description.compareTo(oSimple.description);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + ": " + description;
 	}
 }

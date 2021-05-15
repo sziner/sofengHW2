@@ -3,5 +3,8 @@ package mobilePhone;
 import java.util.Scanner;
 
 public interface Applicable {
-	public void run(Scanner s) throws Exception;
+	public void apply(Scanner s);
+	public void printApp();
+	@Override
+	public String toString();
 }
