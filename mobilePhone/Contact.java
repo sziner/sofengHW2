@@ -5,18 +5,21 @@ import java.util.ArrayList;
 public class Contact implements Comparable<Contact>  {
 
 	private String name;
- 	private int phonenumber = 0;	
+ 	private int phonenumber;	
  	private ArrayList<String> chat;
 
 	/* regular class methods */
  
 	public Contact(String name) {
 		this.name = name;
+		this.phonenumber = 0;
+		this.chat = new ArrayList<String>();
 	}
 	
 	public Contact(String name, int phonenumber) {
 		this.name = name;
 		this.phonenumber = phonenumber;
+		this.chat = new ArrayList<String>();
 	}
 	
 	public String getName() {
@@ -27,7 +30,7 @@ public class Contact implements Comparable<Contact>  {
 	}
 
 	public String toString() {
-		String str = this.name + " " + this.phonenumber;
+		String str = this.name + " - " + this.phonenumber;
 		return str;
 	}
 

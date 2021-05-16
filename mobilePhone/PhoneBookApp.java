@@ -7,73 +7,73 @@ import java.io.File; // Import the File class
 import java.io.FileNotFoundException; // Import this class to handle errors
 
 public class PhoneBookApp implements Applicable {
-	private ArrayList<Contact> list;
+	private ArrayList<Contact> contactList;
 	private CalendarApp cal;
 
-	public PhoneBookApp(ArrayList<Contact> list, CalendarApp cal) {
-		this.list = list;
+	public PhoneBookApp(ArrayList<Contact> contactList, CalendarApp cal) {
+		this.contactList = contactList;
 		this.cal = cal;
 	}
 	
 	public void add(String name, int phonenumber) throws Exception {
 		Contact c = new Contact(name, phonenumber);
-		int index = Collections.binarySearch(list, c);
+		int index = Collections.binarySearch(contactList, c);
 		if (index >= 0) {
 			throw new Exception("Cannot add duplicate contact name");
 		} else {
-			list.add(-(index+1), c);
+			contactList.add((-index)-1, c);
 		}
 	}
 
 	public void removeContact(String name) throws Exception {
 		Contact c = new Contact(name);
-		int index = Collections.binarySearch(list, c);
+		int index = Collections.binarySearch(contactList, c);
 		if (index >= 0) {
 			cal.clearContactMeetings(name);
-			list.remove(index);
+			contactList.remove(index);
 		}
 	}
 
 	public void printPhoneBook() {
-		if (list.isEmpty()) {
+		if (contactList.isEmpty()) {
 			System.out.println("Phonebook is empty");
 		}
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i));
+		for (int i = 0; i < contactList.size(); i++) {
+			System.out.println(contactList.get(i));
 		}
 	}
 
 	public void search(String name) {
-		int i = list.indexOf(name);
+		int i = contactList.indexOf(name);
 		if (i > -1) {
-			System.out.println("Contact found: " + list.get(i));
+			System.out.println("Contact found: " + contactList.get(i));
 		} else {
 			System.out.println("Contact not found\n");
 		}
 	}
 
 	public void sortByName() {
-		list.sort(null);
+		contactList.sort(null);
 	}
 
 	public void sortByNumber() {
-		list.sort((a, b) ->   b.getPhonenumber() - a.getPhonenumber());
+		contactList.sort((a, b) ->   b.getPhonenumber() - a.getPhonenumber());
 	}
 
 	public void reverse() {
 		ArrayList<Contact> revLinkedList = new ArrayList<Contact>();
-		for (int i = list.size() - 1; i >= 0; i--) {
-			revLinkedList.add(list.get(i));
+		for (int i = contactList.size() - 1; i >= 0; i--) {
+			revLinkedList.add(contactList.get(i));
 		}
-		list.clear();
-		list = revLinkedList;
+		contactList.clear();
+		contactList = revLinkedList;
 	}
 
 	public void exportToFile(String filename) {
 		try {
 			FileWriter file = new FileWriter(filename);
-			for (int i = 0; i < list.size(); i++) {
-				file.write(list.get(i).toString() + "\n");
+			for (int i = 0; i < contactList.size(); i++) {
+				file.write(contactList.get(i).toString() + "\n");
 			}
 			file.close();
 		} catch (IOException e) {
@@ -88,12 +88,12 @@ public class PhoneBookApp implements Applicable {
 			while (fileScan.hasNext()) {
 				String name = fileScan.next();
 				int phonenumber = fileScan.nextInt();
-				if(list.indexOf(name) != -1)
+				if(contactList.indexOf(name) != -1)
 				{
 					System.out.println("The name: " + name + " already exists.");
 					continue;
 				}
-				list.add(new Contact(name, phonenumber));
+				contactList.add(new Contact(name, phonenumber));
 			}
 			fileScan.close();
 		} catch (FileNotFoundException e) {
@@ -137,24 +137,18 @@ public class PhoneBookApp implements Applicable {
 				}
 				op = s.nextInt();
 				if (op==1) {
-					String name ="";
-					while (s.hasNext()) {
-						name.concat(name);
-					}
 					System.out.println("enter a name:");
-					//String name = s.next();
+					s.nextLine();
+					String name = s.nextLine();
 					System.out.println("enter a phone number:");
 					int phonenumber = s.nextInt();
 					add(name, phonenumber);
 					continue;
 				}
 				else if (op==2) {
-					String name ="";
 					System.out.println("enter contact name to delete");
-					while (s.hasNext()) {
-						name.concat(name);
-					}
-					//name = s.next();
+					s.nextLine();
+					String name = s.nextLine();
 					removeContact(name);
 					continue;
 				}
@@ -165,8 +159,8 @@ public class PhoneBookApp implements Applicable {
 				}
 				else if (op==4) {
 					System.out.println("enter contact name to find");
-					String name;
-					name = s.next();
+					s.nextLine();
+					String name = s.nextLine();
 					search(name);
 					continue;
 				}

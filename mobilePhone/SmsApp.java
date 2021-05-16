@@ -1,6 +1,7 @@
 package mobilePhone;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class SmsApp implements Applicable {
@@ -12,23 +13,25 @@ public class SmsApp implements Applicable {
 	}
 
 	public void addMessageToContact(String name, String str) throws Exception {
-		int index = contactList.indexOf(name);
+		Contact c = new Contact(name);
+		int index = Collections.binarySearch(contactList, c);
 		if (index < 0) {
 			throw new Exception("Contact does not exist");
 		}
 		contactList.get(index).addToChat(str);
 	}
-
+	
 	public void clearContactChat(String name) {
-		int index = contactList.indexOf(name);
+		Contact c = new Contact(name);
+		int index = Collections.binarySearch(contactList, c);		
 		if (index >= 0) {
 			contactList.get(index).deleteChat();
 		}
 	}
 
 	public void printContactChat(String name) {
-		int index = contactList.indexOf(name);
-		if (index >= 0) {
+		Contact c = new Contact(name);
+		int index = Collections.binarySearch(contactList, c);		if (index >= 0) {
 			System.out.println("Chat of " + name + ":");
 			contactList.get(index).printChat();
 		}
@@ -39,7 +42,7 @@ public class SmsApp implements Applicable {
 		String res = "";
 		for (Contact c : contactList) {
 			if (c.contains(str)) {
-				res = res + c.getName() + "\n";
+				res.concat(c.getName() + "\n");
 				++count;
 			}
 		}
@@ -93,32 +96,25 @@ public class SmsApp implements Applicable {
 				}
 				op = s.nextInt();
 				if (op==1) {
-					String name = "";
-					String msg = "";
 					System.out.println("enter contact's name:");
-					while (s.hasNext()) {
-						name.concat(s.next());
-					}
-					//String name = s.next();
+					s.nextLine();
+					String name = s.nextLine();
 					System.out.println("enter message:");
-					while (s.hasNext()) {
-						msg.concat(s.next());
-					}
-					//String msg = s.nextLine();
+					String msg = s.nextLine();
 					addMessageToContact(name, msg);
 					continue;
 				}
 				else if (op==2) {
 					System.out.println("enter contact name to clear chat");
-					String name;
-					name = s.next();
+					s.nextLine();
+					String name = s.nextLine();
 					clearContactChat(name);
 					continue;
 				}
 				else if (op==3) {
 					System.out.println("enter contact name to print his chat");
-					String name;
-					name = s.next();
+					s.nextLine();
+					String name = s.nextLine();
 					printContactChat(name);
 					System.out.println();
 					continue;

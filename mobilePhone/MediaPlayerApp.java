@@ -59,7 +59,8 @@ public class MediaPlayerApp implements Applicable {
 				op = s.nextInt();
 				if (op == 1) {
 					System.out.println("enter media label:");
-					String label = s.next();
+					s.nextLine();
+					String label = s.nextLine();
 					System.out.println("enter length:");
 					float length = s.nextFloat();
 					l1: while (true) {
@@ -81,7 +82,8 @@ public class MediaPlayerApp implements Applicable {
 					continue;
 				} else if (op == 2) {
 					System.out.println("Enter media label to play");
-					String label = s.next();
+					s.nextLine();
+					String label = s.nextLine();
 					playMedia(label);
 					continue;
 				} else if (op == 3) {

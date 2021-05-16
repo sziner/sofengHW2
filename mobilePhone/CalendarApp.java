@@ -72,7 +72,9 @@ public class CalendarApp implements Applicable {
 	}
 
 	public void printContactMeetings(String name) throws Exception {
-		if (!(contactList.contains(name))) {
+		Contact c = new Contact(name);
+		int index = Collections.binarySearch(contactList, c);
+		if (index < 0) {
 			throw new Exception("Contact does not exist");
 		}
 		System.out.println("Meetings for " + name + ":");
@@ -158,13 +160,14 @@ public class CalendarApp implements Applicable {
 						switch (type) {
 							case 1:
 							System.out.println("enter contact's name:");
-							String name = s.next();
-							int index = contactList.indexOf(name);
-							if (index < 0) {
+							s.nextLine();
+							String name = s.nextLine();
+							Contact c = new Contact(name);
+							int index = Collections.binarySearch(contactList, c);							if (index < 0) {
 								System.out.println("Contact does not exist");
 								continue;
 							}
-							Contact c = contactList.get(index);
+							c = contactList.get(index);
 							ev = new MeetingCalendarEvent(date, duration, c);
 							addCalendarEvent(ev);
 							break l1;
@@ -200,13 +203,14 @@ public class CalendarApp implements Applicable {
 						switch (type) {
 							case 1:
 							System.out.println("enter contact's name:");
-							String name = s.next();
-							int index = contactList.indexOf(name);
-							if (index < 0) {
+							s.nextLine();
+							String name = s.nextLine();
+							Contact c = new Contact(name);
+							int index = Collections.binarySearch(contactList, c);							if (index < 0) {
 								System.out.println("Contact does not exist");
 								continue;
 							}
-							Contact c = contactList.get(index);
+							c = contactList.get(index);
 							ev = new MeetingCalendarEvent(date, duration, c);
 							removeCalendarEvent(ev);
 							break l2;
@@ -223,6 +227,7 @@ public class CalendarApp implements Applicable {
 							System.out.println("invalid input.");
 						}
 					}
+					continue;
 				}
 				else if (op==3) {
 					System.out.println("Enter day to print (1-30):");
@@ -232,8 +237,8 @@ public class CalendarApp implements Applicable {
 				}
 				else if (op==4) {
 					System.out.println("enter contact name");
-					String name;
-					name = s.next();
+					s.nextLine();
+					String name = s.nextLine();
 					printContactMeetings(name);
 					continue;
 				}

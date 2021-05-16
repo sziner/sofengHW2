@@ -6,11 +6,13 @@ import java.util.Scanner;
 //import java.util.*;
 public class MobilePhone {
 
-	private ArrayList<Applicable> appList = new ArrayList<Applicable>();
-	private ArrayList<Contact> contactList = new ArrayList<Contact>();
+	private ArrayList<Applicable> appList;
+	private ArrayList<Contact> contactList;
 	Scanner s = new Scanner(System.in);
 
 	public MobilePhone() {
+		appList = new ArrayList<Applicable>();
+		contactList = new ArrayList<Contact>();
 		CalendarApp cal = new CalendarApp(contactList);
 		appList.ensureCapacity(5);
 		appList.add(0, new OperatingSystem());
