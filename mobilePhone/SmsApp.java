@@ -93,11 +93,18 @@ public class SmsApp implements Applicable {
 				}
 				op = s.nextInt();
 				if (op==1) {
+					String name = "";
+					String msg = "";
 					System.out.println("enter contact's name:");
-					String name = s.next();
+					while (s.hasNext()) {
+						name.concat(s.next());
+					}
+					//String name = s.next();
 					System.out.println("enter message:");
-					s.nextLine();
-					String msg = s.nextLine();
+					while (s.hasNext()) {
+						msg.concat(s.next());
+					}
+					//String msg = s.nextLine();
 					addMessageToContact(name, msg);
 					continue;
 				}

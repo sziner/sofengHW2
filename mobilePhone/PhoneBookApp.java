@@ -137,17 +137,24 @@ public class PhoneBookApp implements Applicable {
 				}
 				op = s.nextInt();
 				if (op==1) {
+					String name ="";
+					while (s.hasNext()) {
+						name.concat(name);
+					}
 					System.out.println("enter a name:");
-					String name = s.next();
+					//String name = s.next();
 					System.out.println("enter a phone number:");
 					int phonenumber = s.nextInt();
 					add(name, phonenumber);
 					continue;
 				}
 				else if (op==2) {
+					String name ="";
 					System.out.println("enter contact name to delete");
-					String name;
-					name = s.next();
+					while (s.hasNext()) {
+						name.concat(name);
+					}
+					//name = s.next();
 					removeContact(name);
 					continue;
 				}
