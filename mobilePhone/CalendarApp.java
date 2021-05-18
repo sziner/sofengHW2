@@ -26,7 +26,10 @@ public class CalendarApp implements Applicable {
 	}
 
 	public void clearContactMeetings(String name) throws Exception {
-		eventList.removeIf(x -> (x instanceof MeetingCalendarEvent) && ((MeetingCalendarEvent) x).equals(name));
+		eventList.removeIf(
+			event -> (
+				(event instanceof MeetingCalendarEvent)
+				&& ((MeetingCalendarEvent) event).equals(name)));
 	}
 
 	public boolean removeCalendarEvent(AbstractCalendarEvent event) throws Exception {
@@ -251,6 +254,7 @@ public class CalendarApp implements Applicable {
 					printAllEvents();
 					continue;
 				} else if (op==7) {
+					System.out.println("Exiting " + this + "...");
 					return;
 				}
 				System.out.println("Invalid input\n");

@@ -8,9 +8,10 @@ public class MobilePhone {
 
 	private ArrayList<Applicable> appList;
 	private ArrayList<Contact> contactList;
-	Scanner s = new Scanner(System.in);
+	Scanner s;
 
-	public MobilePhone() {
+	public MobilePhone(Scanner s) {
+		this.s = s;
 		appList = new ArrayList<Applicable>();
 		contactList = new ArrayList<Contact>();
 		CalendarApp cal = new CalendarApp(contactList);
@@ -33,17 +34,21 @@ public class MobilePhone {
 				for(int i = 1; i <appList.size(); ++i) {
 					System.out.println(i + ". " + appList.get(i));
 				}
-				System.out.println(appList.size() + ". EXIT");
+				System.out.println(appList.size() + ". PRINT ALL");
+				System.out.println((appList.size()+1) + ". EXIT");
 				if (!s.hasNextInt()) {
 					System.out.println("Illegal input");
 					s.next();
 					continue;
 				}
 				op = s.nextInt();
-				if (op < 1 || op > appList.size()) {
+				if (op < 1 || op > appList.size()+1) {
 					System.out.println("Invalid input\n");
 					continue;
 				} else if (op == appList.size()) {
+					printAllApps();
+					return;
+				} else if (op == appList.size() +1) {
 					System.out.println("Goodbye!");
 					return;
 				} else {
@@ -53,20 +58,27 @@ public class MobilePhone {
 		}
 
 		public String toString() {
-			return "MOBILE PHONE";
+			return "OPERATING-SYSTEM";
 		}
 
 		@Override
 		public void printApp() {
 			System.out.println("Installed applications:");
 			for (Applicable app : appList) {
-				System.out.println(app);
-				app.printApp();
+				System.out.println("- " + app);
 			}
 		}
 	}
 
-	public void startUp() {
+	public void powerUp() {
 		appList.get(0).apply(s);
+	}
+
+	private void printAllApps() {
+		for (Applicable app : appList) {
+			System.out.println(app + ":");
+			app.printApp();
+			System.out.println();
+		}
 	}
 }

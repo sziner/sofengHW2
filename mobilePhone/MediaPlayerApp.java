@@ -96,7 +96,7 @@ public class MediaPlayerApp implements Applicable {
 					}
 					continue;
 				} else if (op == 4) {
-					System.out.println("Exiting...");
+					System.out.println("Exiting " + this + "...");
 					return;
 				} else {
 					System.out.println("Invalid input\n");

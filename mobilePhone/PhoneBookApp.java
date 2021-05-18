@@ -44,9 +44,10 @@ public class PhoneBookApp implements Applicable {
 	}
 
 	public void search(String name) {
-		int i = contactList.indexOf(name);
-		if (i > -1) {
-			System.out.println("Contact found: " + contactList.get(i));
+		Contact c = new Contact(name);
+		int index = Collections.binarySearch(contactList, c);
+		if (index > -1) {
+			System.out.println("Contact found: " + contactList.get(index));
 		} else {
 			System.out.println("Contact not found\n");
 		}
@@ -88,12 +89,14 @@ public class PhoneBookApp implements Applicable {
 			while (fileScan.hasNext()) {
 				String name = fileScan.next();
 				int phonenumber = fileScan.nextInt();
-				if(contactList.indexOf(name) != -1)
+				Contact c = new Contact(name, phonenumber);
+				int index = Collections.binarySearch(contactList, c);
+				if(index > -1)
 				{
 					System.out.println("The name: " + name + " already exists.");
 					continue;
 				}
-				contactList.add(new Contact(name, phonenumber));
+				contactList.add(c);
 			}
 			fileScan.close();
 		} catch (FileNotFoundException e) {
@@ -104,13 +107,12 @@ public class PhoneBookApp implements Applicable {
 
 	@Override
 	public void printApp() {
-		System.out.println("PHONEBOOK:");
 		printPhoneBook();
 	}
 
 	@Override
 	public String toString() {
-		return "PHONE BOOK";
+		return "PHONEBOOK";
 	}
 
 	@Override
@@ -196,7 +198,7 @@ public class PhoneBookApp implements Applicable {
 					continue;
 				}
 				else if (op==10) {
-					System.out.println("Exiting...");
+					System.out.println("Exiting " + this + "...");
 					return;
 				}
 				System.out.println("Invalid input\n");

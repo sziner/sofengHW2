@@ -57,17 +57,18 @@ public class SmsApp implements Applicable {
 	public void printAllChats() {
 		if (contactList.isEmpty()) {
 			System.out.println("No contacts.");
+			System.out.println();
 		} else {
 			for (Contact c : contactList) {
 				System.out.println(c.getName() + ":");
 				c.printChat();
+				System.out.println();
 			}
 		}
 	}
 
 	@Override
 	public void printApp() {
-		System.out.println("SMS:");
 		printAllChats();
 	}
 
@@ -133,7 +134,7 @@ public class SmsApp implements Applicable {
 					continue;
 				}
 				else if (op==6) {
-					System.out.println("Exiting...");
+					System.out.println("Exiting " + this + "...");
 					return;
 				}
 				System.out.println("Invalid input\n");
