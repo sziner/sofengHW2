@@ -148,14 +148,54 @@ public class CalendarApp implements Applicable {
 				if (op==1) {
 					System.out.println("enter day of month (1-30):");
 					int d = s.nextInt();
+					if(d<1 || d>30)
+					{
+					while(true){
+					System.out.println("enter day of month (1-30):");
+					d = s.nextInt();
+					if(d>=1 && d<=30)
+						continue;
+					else
+						System.out.println("You can't choose this day");
+					}
+					}
 					System.out.println("enter hour of day (0-23):");
 					int h = s.nextInt();
+					if(h<0 || h>23) {
+					while(true){
+					System.out.println("enter hour of day (0-23):");
+					h = s.nextInt();
+					if(h>=0 && h<=23)
+						continue;
+					else
+						System.out.println("You can't choose this hour");
+					}
+					}
 					System.out.println("enter minutes (0-59):");
 					int m = s.nextInt();
-
+					if(m<0 && m>59) {
+					while(true){
+					System.out.println("enter minutes (0-59):");
+					m = s.nextInt();
+					if(m>=0 && m<=59)
+						continue;
+					else
+						System.out.println("You can choose only (0-59) minutes");
+					}
+					}
 					Date date = new Date(0, 0, d, h, m);
 					System.out.println("enter duration in minutes (1-60):");
 					int duration = s.nextInt();
+					if(duration<1 && duration>60) {
+					while(true){
+					System.out.println("enter duration in minutes (1-60):");
+					duration = s.nextInt();
+					if(duration>=1 && duration<=60)
+						continue;
+					else
+						System.out.println("You can choose only (1-60) minutes");
+					}
+					}
 					l1: while (true) {
 						System.out.println("Choose event type:\n1.Meeting\n2.Simple event");
 						int type = s.nextInt();
