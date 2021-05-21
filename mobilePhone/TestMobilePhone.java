@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class TestMobilePhone {
 	public static void main(String args[]) {
-		final String PATH = "mobilePhone\\testInput.txt";
+		final String PATH = "mobilePhone\\testInput.txt";//external input file. Can be found in the zip file
 		File file= new File(PATH);
 		try {
 			Scanner fileScan = new Scanner(file);
