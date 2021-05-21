@@ -1,22 +1,5 @@
-1
-1
-Shoham Ziner
-0506660776
-3
-1
-Avi Mizrahi
-123456
-3
-10
-2
-1
-Shoham Ziner
-Hi Shoham Ziner!
-3
-Shoham Ziner
-2
-Shoham Ziner
-5
-6
-5
-6
+import java.util.*;
+{
+public static void  main (String[]args)
+{
+Contact
